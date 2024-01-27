@@ -6,25 +6,41 @@
             <h2 class="title">{{ product.name }}</h2>
             <p>{{ product.description }}</p>
         </div>
+        {{ url }}
     </section>
 </template>
 
 <script>
-import {api} from "../services/api";
+import { api } from "../services/api";
+import {serialize} from "../utils/helpers"
 
 export default {
     
     name: "ListProducts",
     data() {
         return {
-            products: []
+            products: [],
+            productPages: 10
         };
+    },
+    computed: {
+        url() {
+            const query = serialize(this.$route.query);
+
+            return `/product?_limit=${this.productPages}${query}`;
+
+        }
     },
     methods: {
         getProducts() {
-            api.get("/product").then(res => {
+            api.get(this.url).then(res => {
                     this.products = res.data;
                 });
+        }
+    },
+    watch: {
+        url() {
+            this.getProducts();
         }
     },
     created() {
