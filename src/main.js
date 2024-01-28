@@ -6,8 +6,19 @@ import PageLoading from "./components/PageLoading.vue"
 
 Vue.config.productionTip = false
 
+Vue.component("PageLoading", PageLoading)
 
-Vue.component("PageLoading",PageLoading)
+Vue.filter("numberPrice", price => {
+  price = Number(price)
+  if (!isNaN(price)) {
+    return price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency:"BRL"
+    })
+  } else {
+    return ""
+  }
+})
 
 new Vue({
   router,

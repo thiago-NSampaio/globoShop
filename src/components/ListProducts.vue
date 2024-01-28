@@ -2,7 +2,7 @@
     <section class="products-container">
         <div v-if="products && products.length" class="products">
             <div class="product" v-for="(product, index) in products" :key="index">
-                <router-link to="/">
+                <router-link :to="{ name:'product', params:{id:product.id} }">
                     <img v-if="product.photos" :src="product.photos[0].src" :alt="product.photos[0].title">
                     <p class="price">{{ product.price }}</p>
                     <h2 class="title">{{ product.name }}</h2>
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             products: null,
-            productPages: 2,
+            productPages: 6,
             totalProducts: 0
         };
     },
