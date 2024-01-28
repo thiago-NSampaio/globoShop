@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <TheHeader />
-    <main>
-      <router-view/>
-    </main>
+      <transition mode="out-in">
+        <main>
+          <router-view/>
+        </main>
+      </transition>
     <TheFooter />
   </div>
 </template>
@@ -80,25 +82,29 @@ main{
   flex: 1;
 }
 
-input, textarea{
+label{
+  margin-bottom: 5px;
+}
+
+input, textarea {
+  border: 1px solid white;
   border-radius: 4px;
-  border: none;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(30,30,90, 0.1);
-  transition: all 0.3s;
+  box-shadow: 0 4px 8px rgba(30, 60, 90, 0.1);
   font-size: 1rem;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 15px;
+  padding: 15px;
+  transition: all 0.3s;
 }
 
-input:focus,
-input:hover, 
-textarea:hover,
-textarea:focus{
-  outline: none;
-  box-shadow: 0px 6px 12px rgba(30,30,90, 0.2);
+input:hover, textarea:hover,
+input:focus, textarea:focus {
   border-color: #87f;
+  box-shadow: 0 6px 12px rgba(30, 60, 90, 0.2);
+  outline: none;
+  transition: all 0.3s;
 }
+
 
 .v-enter,
 .v-leave-to{

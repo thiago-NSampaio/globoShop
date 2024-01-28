@@ -4,14 +4,22 @@
             <router-link to="/" class="logo">
                 <img src="../assets/GloboShop.svg" alt="GloboShop">
             </router-link>
-            <router-link class="btn" to="login">Vender / Login</router-link>
+            <!-- Verifica se o usuário está logado para exibir o nome dele ou 'Vender / Login' -->
+            <router-link v-if="$store.state.login" class="btn" to="/user">{{ name }}</router-link>
+            <router-link v-else class="btn" to="/login">Vender / Login</router-link>
         </nav>
     </header>
 </template>
 
 <script>
 export default {
-        name: "TheHeader"
+    name: "TheHeader",
+    computed: {
+        name() {
+            // Extrai apenas o primeiro nome do usuário.
+            return this.$store.state.user.name.replace(/ .*/,"")
+        }
+    }
     }
 </script>
 

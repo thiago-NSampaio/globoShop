@@ -24,7 +24,7 @@ import PageLoading from '@/components/PageLoading.vue';
 import { api } from '@/services/api';
 
 export default {
-    name: "Product-view",
+    name: "product-view",
     props: ["id"],
     data() {
         return {
