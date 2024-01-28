@@ -1,7 +1,7 @@
 <template>
     <section class="products-container">
         <div v-if="products && products.length" class="products">
-            <div class="product" v-for="product in products" :key="product.id">
+            <div class="product" v-for="(product, index) in products" :key="index">
                 <router-link to="/">
                     <img v-if="product.photos" :src="product.photos[0].src" :alt="product.photos[0].title">
                     <p class="price">{{ product.price }}</p>
@@ -9,24 +9,35 @@
                     <p>{{ product.description }}</p>
                 </router-link>
             </div>
+            <PaginationProducts :totalProducts="totalProducts" :productPages="productPages"/>
         </div>
         <div v-else-if="products && products.length ===0">
             <p class="no-results">Busca sem resultados. Use outro termo</p>
+        </div>
+        <div v-else>
+            <PageLoading />
         </div>
     </section>
 </template>
 
 <script>
 import { api } from "../services/api";
-import {serialize} from "../utils/helpers"
+import { serialize } from "../utils/helpers";
+import PageLoading from "./PageLoading.vue";
+import PaginationProducts from "./PaginationProducts.vue";
 
 export default {
     
     name: "ListProducts",
+    components: {
+    PaginationProducts,
+    PageLoading
+},
     data() {
         return {
-            products: [],
-            productPages: 10
+            products: null,
+            productPages: 2,
+            totalProducts: 0
         };
     },
     computed: {
@@ -38,7 +49,10 @@ export default {
     },
     methods: {
         getProducts() {
+            this.products = null;
             api.get(this.url).then(res => {
+                    // Extrai a quantitade total de itens da requisição.
+                    this.totalProducts = Number(res.headers["x-total-count"]);
                     this.products = res.data;
                 });
         }
