@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  strict:true,
   // Estado inicial da aplicação, contendo informações sobre o login e o usuário.
   state: {
     login: false, // Indica se o usuário está autenticado ou não.
@@ -15,6 +16,7 @@ export default new Vuex.Store({
       password: "",
       postalCode: "",
       street: "",
+      number:"",
       neighborhood: "",
       city: "",
       state: ""
@@ -30,7 +32,8 @@ export default new Vuex.Store({
     },
     // Mutation para atualizar o estado do 'usuário'.
     UPDATE_USER(state, payload) {
-      state.user = payload;
+      // Manter outros objetos quando o update acontecer.
+      state.user = Object.assign(state.user,payload);
     }
   },
   // Actions contêm lógica de negócios e chamam as mutations para modificar o estado.

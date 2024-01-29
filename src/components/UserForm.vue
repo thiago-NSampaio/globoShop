@@ -1,9 +1,11 @@
 <template>
   <form>
+    <label for="name">Nome</label>
+    <input type="text" name="name" id="name" v-model="name" />
     <label for="email">Email</label>
     <input type="email" name="email" id="email" v-model="email" />
     <label for="password">Senha</label>
-    <input type="email" name="password" id="password" v-model="password" />
+    <input type="password" name="password" id="password" v-model="password" />
     <label for="postalCode">Cep</label>
     <input type="text" name="postalCode" id="postalCode" v-model="postalCode" />
     <label for="street">Rua</label>
@@ -23,7 +25,19 @@
   </form>
 </template>
 <script>
-export default {};
+import {plugin} from "@/utils/plugin"
+
+export default {
+  name: "UserForm",
+  computed: {
+    ...plugin({
+      fields: ["name","email", "password", "postalCode", "street", "number", "neighborhood", "city", "state"],
+      base: "user",
+      mutation: "UPDATE_USER"
+    })
+
+  }
+};
 </script>
 <style scoped>
 form {
