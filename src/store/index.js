@@ -47,6 +47,29 @@ export default new Vuex.Store({
         // Chama a mutation para atualizar o estado 'login' para true.
         context.commit("UPDATE_LOGIN", true)
       })
+    },
+
+    // Cria o usuário.
+    createUser(context, payload) {
+      context.commit("UPDATE_USER",{id:payload.email})
+      api.post("/user", payload);
+    },
+
+    // Reseta as propriedades do usuário.
+    logout(context) {
+      context.commit("UPDATE_USER", {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        postalCode: "",
+        street: "",
+        number:"",
+        neighborhood: "",
+        city: "",
+        state: ""
+      })
+      context.commit("UPDATE_LOGIN",false)
     }
   },
   modules: {

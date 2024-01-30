@@ -7,7 +7,7 @@
     <label for="password">Senha</label>
     <input type="password" name="password" id="password" v-model="password" />
     <label for="postalCode">Cep</label>
-    <input type="text" name="postalCode" id="postalCode" v-model="postalCode" />
+    <input type="text" name="postalCode" id="postalCode" v-model="postalCode" @keyup="fillPostalCode"/>
     <label for="street">Rua</label>
     <input type="text" name="street" id="street" v-model="street" />
     <label for="number">Número</label>
@@ -25,7 +25,8 @@
   </form>
 </template>
 <script>
-import {plugin} from "@/utils/plugin"
+import { plugin } from "@/utils/plugin"
+import { getPostalCode } from "@/services/cep";
 
 export default {
   name: "UserForm",
@@ -36,6 +37,20 @@ export default {
       mutation: "UPDATE_USER"
     })
 
+  },
+  methods: {
+    fillPostalCode() {
+      const postalCode = this.postalCode.replace(/\D/g, "");
+      if (postalCode.length === 8) {
+        getPostalCode(postalCode).then(res => {
+          this.street = res.data.logradouro;
+          this.neighborhood = res.data.bairro;
+          this.state = res.data.uf;
+          this.city = res.data.localidade;
+
+        })
+      }
+    }
   }
 };
 </script>
