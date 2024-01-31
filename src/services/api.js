@@ -13,5 +13,9 @@ export const api = {
     // Retorna o endpoint passado junto com a baseURL mais o que estiver no body da requisição do servidor.
     post(endpoint, body) {
         return axiosInstance.post(endpoint, body)
+    },
+    
+    delete(endpoint) {
+        return axiosInstance.delete(endpoint)
     }
 }

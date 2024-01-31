@@ -2,7 +2,7 @@
     <section>
         <h2>Adicionar Produto</h2>
         <AddProduct />
-        <h2>Seus Produto</h2>
+        <h2>Seus Produtos</h2>
         <transition-group v-if="user_products" name="list" tag="ul">
         <li v-for="(product, index) in user_products" :key="index">
             <ItemProduct :product="product">
@@ -42,6 +42,20 @@ export default {
     }
 }
 </script>
-<style>
-    
+<style scoped>
+h2{
+    margin-bottom: 2opx;
+}
+
+.list-enter-active,
+.list-leave-active {
+    opacity: 0;
+    transform: translate3d(20ox, 0, 0);    
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all .3s;
+}
+
 </style>
