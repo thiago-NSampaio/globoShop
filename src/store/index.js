@@ -20,7 +20,8 @@ export default new Vuex.Store({
       neighborhood: "",
       city: "",
       state: ""
-    }
+    },
+    user_products: null
   },
   getters: {
   },
@@ -34,11 +35,17 @@ export default new Vuex.Store({
     UPDATE_USER(state, payload) {
       // Manter outros objetos quando o update acontecer.
       state.user = Object.assign(state.user,payload);
+    },
+    UPDATE_USER_PRODUCTS(state, payload) {
+      state.user_products= payload;
+    },
+    ADD_USER_PRODUCTS(state, payload) {
+      state.user_products.unshit(payload)
     }
   },
   // Actions contêm lógica de negócios e chamam as mutations para modificar o estado.
   actions: {
-    // Action para obter informações do usuário usando a API.
+    // Obter informações do usuário usando a API.
     getUser(context, payload) {
       // Faz uma chamada à API para obter informações do usuário com o ID fornecido.
       api.get(`/user/${payload}`).then(res => {
@@ -54,7 +61,11 @@ export default new Vuex.Store({
       context.commit("UPDATE_USER",{id:payload.email})
       api.post("/user", payload);
     },
-
+    getUserProducts(context) {
+      api.get(`/product?user_id=${context.state.user.id}`).then(res => {
+        context.commit("UPDATE_USER_PRODUCTS", res.data)
+      })
+    },
     // Reseta as propriedades do usuário.
     logout(context) {
       context.commit("UPDATE_USER", {
