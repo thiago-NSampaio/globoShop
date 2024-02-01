@@ -11,7 +11,11 @@
                 <h1>{{ product.name }}</h1>
                 <p class="price">{{ product.price | numberPrice}}</p>
                 <p class="description">{{ product.description }}</p>
-                <button class="btn" v-if="product.sold === 'false'">Comprar</button>
+                <transition mode="out-in" v-if="product.sold === 'false'">
+                    <button class="btn" v-if="!finish" @click="finish = true">Comprar</button>
+                    <CheckoutBuy v-else :product="product" />
+                </transition>
+
                 <button class="btn" v-else disabled>Produto Vendido</button>
             </div>
         </div>
@@ -21,6 +25,8 @@
 
 <script>
 import PageLoading from '@/components/PageLoading.vue';
+import CheckoutBuy from '@/components/CheckoutBuy.vue';
+
 import { api } from '@/services/api';
 
 export default {
@@ -28,7 +34,8 @@ export default {
     props: ["id"],
     data() {
         return {
-            product: null
+            product: null,
+            finish: false
         };
     },
     methods: {
@@ -41,7 +48,7 @@ export default {
     created() {
         this.getProduct();
     },
-    components: { PageLoading }
+    components: { PageLoading, CheckoutBuy }
 };
 </script>
 
