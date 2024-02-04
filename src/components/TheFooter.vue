@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <p>Footer</p>
+        <p>GloboShop. Alguns direitos reservados.</p>
     </footer>
 </template>
 

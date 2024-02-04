@@ -31,8 +31,12 @@ export default {
     },
     methods: {
         enter() {
-            this.$store.dispatch("getUser", this.login.email);
-            this.$router.push({name:"user"})
+            this.$store.dispatch("loginUser", this.login).then(res => {
+                    console.log(res)
+                this.$store.dispatch("getUser");
+                this.$router.push({name:"user"})
+            })
+
         }
     },
     components: {

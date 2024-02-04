@@ -37,11 +37,11 @@ export default {
     };
   },
   computed: {
-    ...mapState({ user: "user", login: "login" }), // Fix the computed syntax
+    ...mapState({ user: "user", login: "login" }),
   },
   methods: {
     getSales() {
-      api.get(`/transaction?buyer_id=${this.user.id}`).then((res) => {
+      api.get(`/transaction?type=seller_id`).then(res => {
         this.sales = res.data;
       });
       },

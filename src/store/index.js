@@ -46,9 +46,9 @@ export default new Vuex.Store({
   // Actions contêm lógica de negócios e chamam as mutations para modificar o estado.
   actions: {
     // Obter informações do usuário usando a API.
-    getUser(context, payload) {
+    getUser(context) {
       // Faz uma chamada à API para obter informações do usuário com o ID fornecido.
-      api.get(`/user/${payload}`).then(res => {
+      api.get(`/user`).then(res => {
         // Chama a mutation para atualizar o estado 'user' com os dados obtidos.
         context.commit("UPDATE_USER", res.data)
         // Chama a mutation para atualizar o estado 'login' para true.
@@ -64,6 +64,14 @@ export default new Vuex.Store({
     getUserProducts(context) {
       api.get(`/product?user_id=${context.state.user.id}`).then(res => {
         context.commit("UPDATE_USER_PRODUCTS", res.data)
+      })
+    },
+    loginUser(context, payload) {
+      return api.login({
+        username: payload.email,
+        password: payload.password,
+      }).then(res => {
+        window.localStorage.token = `Bearer ${res.data.token}`;
       })
     },
     // Reseta as propriedades do usuário.
