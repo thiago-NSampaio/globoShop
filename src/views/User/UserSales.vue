@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      sales: null,
+      sales:[],
     };
   },
   computed: {
@@ -42,9 +42,12 @@ export default {
   methods: {
     getSales() {
       api.get(`/transaction?type=seller_id`).then(res => {
-        this.sales = res.data;
-      });
-      },
+    console.log('API Response:', res);
+    this.sales = res.data;
+}).catch(error => {
+    console.error('API Error:', error);
+});
+    },
       // Atribui novas chaves para o objeto address
       renamedAddress(address) {
       return {

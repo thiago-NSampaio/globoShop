@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getShopping() {
-            api.get(`/transaction?seller_id=${this.user.id}`).then(res => {
+            api.get(`/transaction?type=buyer_id`).then(res => {
                 this.shopping = res.data;
             })
         }
