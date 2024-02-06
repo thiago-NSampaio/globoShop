@@ -31,17 +31,18 @@ export const api = {
     
     delete(endpoint) {
         return axiosInstance.delete(endpoint)
-    },
+    }, 
     
     put(endpoint, body) {
         return axiosInstance.put(endpoint, body)
     },
     login(body) {
         // Rota para logar
-        return axios.post("http://globloshop.test/wp-json/jwt-auth/v1/token", body);
+        return axiosInstance.post("http://globloshop.test/wp-json/jwt-auth/v1/token", body);
     },
-    validateToke() {
-        return axios.post("http://globloshop.test/wp-json/jwt-auth/v1/token");
+    // Validar o token do usuário.
+    validateToken() {
+        return axiosInstance.post("http://globloshop.test/wp-json/jwt-auth/v1/token/validate");
 
     }
 }
