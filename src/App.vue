@@ -111,6 +111,7 @@ input, textarea {
   margin-bottom: 15px;
   padding: 15px;
   transition: all 0.3s;
+  width: 100%;
 }
 
 input:hover, textarea:hover,

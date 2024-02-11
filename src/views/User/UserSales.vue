@@ -101,4 +101,14 @@ hr.solid {
   border-top: 1px solid #f4f7fc;
 }
 
+@media screen and (max-width:500px){
+        .delivery-address{
+            grid-template-columns: 1fr;
+            grid-gap:10px;
+        }
+        h3 {
+          justify-self: start;
+          margin: 0;
+        }
+      }
 </style>
