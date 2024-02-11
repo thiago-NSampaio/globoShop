@@ -4,15 +4,17 @@
         <UserForm>
             <button class="btn" @click.prevent="finishBuy">Finalizar Compra</button>
         </UserForm>
+        <ErrorNotification :errors="errors"/>
     </section>
 </template>
 <script>
 import { api } from '@/services/api';
 import UserForm from './UserForm.vue';
 import { mapState } from 'vuex';
+import ErrorNotification from './ErrorNotification.vue';
 export default {
     name: "CheckoutBuy",
-    components: { UserForm },
+    components: { UserForm, ErrorNotification },
     props: ["product"],
     computed: {
         ...mapState(["user"]),
@@ -33,22 +35,27 @@ export default {
             }
         }
     },
+    data() {
+        return {
+            errors: []
+        }
+    },
     methods: {
-        createTransaction() {
+        async createTransaction() {
             return api.post("/transaction", this.buy).then(() => {
                 this.$router.push({name:'sales'})
             })
         },
         async createUser() {
+            this.errors = []
             try {
                 await this.$store.dispatch("createUser", this.$store.state.user);
                 await this.$store.dispatch("loginUser", this.$store.state.user);
                 await this.$store.dispatch("getUser");
                 await this.createTransaction()
-                // this.$router.push({ name: "user" })
 
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                this.errors.push(error.response.data.message)
             }
         },
         finishBuy() {

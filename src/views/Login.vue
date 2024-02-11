@@ -8,6 +8,7 @@
             <input type="password" name="password" id="password" v-model="login.password">
             <button class="btn" @click.prevent="enter">Logar</button>
         </form>
+        <ErrorNotification :errors="errors"/>
         <p class="lost">
             <a href="/" target="_blank">Perdeu a senha? Clique aqui</a>
         </p>
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import ErrorNotification from "@/components/ErrorNotification.vue";
 import SignUp from "@/components/SignUp.vue"
 
 export default {
@@ -26,21 +28,26 @@ export default {
             login: {
                 email: "",
                 password: ""
-            }
+            },
+            errors: []
         }
     },
     methods: {
         enter() {
+            this.errors = []
             this.$store.dispatch("loginUser", this.login).then(() => {
                 this.$store.dispatch("getUser");
                 this.$router.push({name:"user"})
+            }).catch(error => {
+                this.errors.push(error.response.data.message)
             })
 
         }
     },
     components: {
-        SignUp
-    }
+    SignUp,
+    ErrorNotification
+}
     }
 </script>
 

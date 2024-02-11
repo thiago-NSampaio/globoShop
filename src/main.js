@@ -3,9 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import PageLoading from "./components/PageLoading.vue"
+import ErrorNotification from "./components/ErrorNotification.vue"
+
 
 Vue.config.productionTip = false
 
+// Componentes Globais.
+Vue.component("ErrorNotification", ErrorNotification)
 Vue.component("PageLoading", PageLoading)
 
 Vue.filter("numberPrice", price => {

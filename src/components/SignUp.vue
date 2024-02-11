@@ -7,31 +7,36 @@
                 <button class="btn btn-form" @click.prevent="createUser">Criar Usuário</button>
             </UserForm>
         </transition>
+        <ErrorNotification :errors="errors"/>
 
     </section>
 </template>
 
 <script>
 import UserForm from "../components/UserForm.vue"
+import ErrorNotification from "./ErrorNotification.vue";
 export default {
     name: "SignUp",
     components: {
-        UserForm
-    },
+    UserForm,
+    ErrorNotification
+},
     data() {
         return {
-        create: false
+            create: false,
+            errors: []
         }
     },
     methods: {
         async createUser() {
+            this.errors = [];
             try {
                 await this.$store.dispatch("createUser", this.$store.state.user);
                 await this.$store.dispatch("loginUser", this.$store.state.user);
                 await this.$store.dispatch("getUser");
                  this.$router.push({name:"user"})
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                this.errors.push(error)
             }
         }
     }
